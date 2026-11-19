@@ -48,7 +48,9 @@ export default ({ config }) => withCmake({
   experiments: { typedRoutes: true, reactCompiler: true },
   extra: {
     ...config.extra,
-    apiUrl: "https://matistore.tech",
+    // Kapta license server. The client's backend URL is not here: it comes with the license.
+    // Set KAPTA_API_URL for the build; the default reaches a local server from the Android emulator.
+    kaptaApiUrl: process.env.KAPTA_API_URL || "http://10.0.2.2:3001",
     eas: { projectId: "ef04824d-e7be-4c55-b093-2ae308782565" },
   },
 });

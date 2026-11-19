@@ -1,11 +1,19 @@
 import axios from 'axios';
-import Constants from 'expo-constants';
 
+// The client's backend (e.g. JM Services). Its URL comes from the Kapta license, see setBackendUrl.
 // eslint-disable-next-line import/no-named-as-default-member
 const client = axios.create({
-  baseURL: Constants.expoConfig?.extra?.apiUrl,
   headers: { 'Content-Type': 'application/json' },
 });
+
+let backendUrl: string | null = null;
+export const getBackendUrl = () => backendUrl;
+
+// Called by LicenseProvider: set while the license is valid, null otherwise.
+export function setBackendUrl(url: string | null) {
+  backendUrl = url;
+  client.defaults.baseURL = url ?? undefined;
+}
 
 let currentToken: string | null = null;
 let onUnauthorized: () => Promise<void> = async () => {};

@@ -15,6 +15,7 @@ import { Card } from '@/components/Card';
 import { Screen } from '@/components/Screen';
 import { StatusPill } from '@/components/StatusPill';
 import { usePollWhileFocused } from '@/hooks/usePollWhileFocused';
+import { EXPIRY_WARNING_DAYS, useLicense } from '@/license/LicenseProvider';
 import { colors } from '@/theme/colors';
 import type { CaptureStatus } from '../../../modules/sms-reader';
 
@@ -35,6 +36,7 @@ const fmt = (ms: number | null) => (ms ? new Date(ms).toLocaleString('fr-FR') : 
 export default function Home() {
   const router = useRouter();
   const { status, unavailable, enabled, resyncNow, ensureStarted } = useCapture();
+  const { daysLeft, offline } = useLicense();
   const [busy, setBusy] = useState(false);
   const [resyncNote, setResyncNote] = useState<string | null>(null);
 
@@ -68,6 +70,21 @@ export default function Home() {
   return (
     <Screen title="Accueil">
       <ScrollView>
+        {daysLeft !== null && daysLeft <= EXPIRY_WARNING_DAYS ? (
+          <Card accent={colors.warning}>
+            <StatusPill label={`Licence : ${daysLeft} jour${daysLeft > 1 ? 's' : ''} restant${daysLeft > 1 ? 's' : ''}`} tone="warning" />
+            <Text style={styles.row}>À la fin de la licence, la capture des paiements s’arrête.</Text>
+            <Pressable onPress={() => router.push('/renew')} accessibilityRole="button">
+              <Text style={styles.link}>Prolonger avec un nouveau code</Text>
+            </Pressable>
+          </Card>
+        ) : null}
+        {offline ? (
+          <Card accent={colors.border}>
+            <StatusPill label="Licence non vérifiée (hors ligne)" tone="neutral" />
+            <Text style={styles.row}>La capture continue jusqu’à 3 jours sans connexion à Kapta.</Text>
+          </Card>
+        ) : null}
         {unavailable ? (
           <Card><Text style={styles.text}>Capture indisponible sur cette plateforme</Text></Card>
         ) : !enabled ? (

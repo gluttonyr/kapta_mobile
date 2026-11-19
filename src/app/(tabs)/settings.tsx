@@ -1,4 +1,5 @@
-import { CheckCircle2, Radio, RotateCcw, XCircle } from 'lucide-react-native';
+import { useRouter } from 'expo-router';
+import { CheckCircle2, KeyRound, Radio, RotateCcw, XCircle } from 'lucide-react-native';
 import { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, Linking, ScrollView, StyleSheet, Switch, View } from 'react-native';
 import { Pressable } from '@/components/Pressable';
@@ -23,6 +24,7 @@ import {
   stopCapture,
 } from '@/capture/startCapture';
 import { useCapture } from '@/capture/useCapture';
+import { EXPIRY_WARNING_DAYS, useLicense } from '@/license/LicenseProvider';
 import { useSession } from '@/session/SessionProvider';
 import { colors } from '@/theme/colors';
 
@@ -32,7 +34,9 @@ const fmtDateTime = (iso: string) => {
 };
 
 export default function Settings() {
+  const router = useRouter();
   const { user, signOut } = useSession();
+  const { account, license, daysLeft, offline, checkedAt } = useLicense();
   const { status, enabled, refresh, ensureStarted } = useCapture();
   const [deviceId, setDeviceId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -137,6 +141,28 @@ export default function Settings() {
           <Text style={styles.sub} selectable>
             {deviceId ?? '-'}
           </Text>
+        </Card>
+
+        <Card accent={daysLeft !== null && daysLeft <= EXPIRY_WARNING_DAYS ? colors.warning : colors.green}>
+          <View style={styles.row}>
+            <KeyRound size={20} color={colors.text} />
+            <Text style={styles.rowLabel}>Licence Kapta</Text>
+          </View>
+          <Text style={styles.value}>{license?.client.name ?? account?.clientName ?? '-'}</Text>
+          <Text style={styles.sub}>{account?.email}</Text>
+          <Text style={[styles.label, styles.gap]}>Valable jusqu&apos;au</Text>
+          <Text style={styles.sinceDate}>
+            {license?.expiresAt ? new Date(license.expiresAt).toLocaleDateString('fr-FR') : '—'}
+            {daysLeft !== null ? `  (${daysLeft} jour${daysLeft > 1 ? 's' : ''})` : ''}
+          </Text>
+          <Text style={styles.sub}>
+            {offline
+              ? `Hors ligne : dernière vérification le ${checkedAt ? fmtDateTime(new Date(checkedAt).toISOString()) : '—'}`
+              : 'Licence vérifiée auprès de Kapta.'}
+          </Text>
+          <Pressable style={[styles.resetBtn, styles.gap]} onPress={() => router.push('/renew')} accessibilityRole="button">
+            <Text style={styles.resetText}>Prolonger avec un nouveau code</Text>
+          </Pressable>
         </Card>
 
         {rows.map((r) => (

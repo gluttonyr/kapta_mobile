@@ -1,20 +1,9 @@
-import Constants from 'expo-constants';
-import { randomUUID } from 'expo-crypto';
-
-import client from '@/api/client';
-import { store } from '@/session/SessionProvider';
+import client, { getBackendUrl } from '@/api/client';
+import { getDeviceId } from '@/session/device';
+import { store } from '@/session/store';
 import * as SmsReader from '../../modules/sms-reader';
 
-const DEVICE_ID_KEY = 'mati-pay-device-id';
-
-export async function getDeviceId(): Promise<string> {
-  let id = await store.get(DEVICE_ID_KEY);
-  if (!id) {
-    id = randomUUID();
-    await store.set(DEVICE_ID_KEY, id);
-  }
-  return id;
-}
+export { getDeviceId };
 
 // Senders = non-empty notificationTitleAdmin of active operators.
 export async function fetchSenders(): Promise<string[]> {
@@ -67,6 +56,8 @@ export async function startCapture({ resetActivation = false } = {}) {
     return;
   }
   try {
+    const apiUrl = getBackendUrl();
+    if (!apiUrl) throw new Error('Licence Kapta inactive : capture arrêtée');
     const deviceId = await getDeviceId();
     const senders = await fetchSenders(); // before register: register revokes the previous token
     const reg = await client.post(resetActivation ? '/sms-capture/device/reset-activation' : '/sms-capture/device/register', { deviceId });
@@ -76,7 +67,7 @@ export async function startCapture({ resetActivation = false } = {}) {
       await store.set(ACTIVATED_AT_KEY, JSON.stringify({ at, reset: resetActivation || (!!prev?.reset && prev.at === at) }));
     }
     await SmsReader.start({
-      apiUrl: Constants.expoConfig?.extra?.apiUrl,
+      apiUrl,
       deviceId,
       deviceToken: reg.data.data.token,
       senders,
