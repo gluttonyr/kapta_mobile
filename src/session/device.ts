@@ -2,8 +2,7 @@ import { randomUUID } from 'expo-crypto';
 
 import { store } from './store';
 
-// Kept from Mati-Pay so an updated phone keeps its id.
-const DEVICE_ID_KEY = 'mati-pay-device-id';
+const DEVICE_ID_KEY = 'kapta-device-id';
 
 /** Stable per installation: the Kapta license and the client's capture token are bound to it. */
 export async function getDeviceId(): Promise<string> {

@@ -24,7 +24,7 @@ const FILTERS: { key: Filter; label: string }[] = [
 ];
 
 const ACCENT: Record<SmsStatut, string> = {
-  ATTRIBUE: colors.green,
+  ATTRIBUE: colors.success,
   A_RAPPROCHER: colors.warning,
   SANS_TRANSACTION: colors.textSecondary,
   IGNORE: colors.textSecondary,
@@ -102,7 +102,7 @@ export default function SmsList() {
       <Screen title="SMS">
         {header}
         {queue.isLoading ? (
-          <ActivityIndicator color={colors.greenText} />
+          <ActivityIndicator color={colors.primaryText} />
         ) : queue.isError ? (
           <Text style={styles.empty}>File locale indisponible sur cette plateforme</Text>
         ) : (
@@ -137,14 +137,14 @@ export default function SmsList() {
         onEndReachedThreshold={0.4}
         ListEmptyComponent={
           q.isLoading ? (
-            <ActivityIndicator color={colors.greenText} />
+            <ActivityIndicator color={colors.primaryText} />
           ) : (
             <Text style={q.isError ? styles.err : styles.empty}>
               {q.isError ? 'Chargement impossible. Tirez pour réessayer.' : 'Aucun SMS'}
             </Text>
           )
         }
-        ListFooterComponent={q.isFetchingNextPage ? <ActivityIndicator color={colors.greenText} /> : undefined}
+        ListFooterComponent={q.isFetchingNextPage ? <ActivityIndicator color={colors.primaryText} /> : undefined}
         renderItem={({ item: s }: { item: Sms }) => (
           <Pressable accessibilityRole="button" onPress={() => router.push(`/sms/${s.trackingId}`)}>
             <Card accent={ACCENT[s.statut]}>
@@ -175,12 +175,12 @@ const styles = StyleSheet.create({
   },
   filters: { marginVertical: 10, flexGrow: 0 },
   chip: { borderRadius: 999, borderWidth: 1, borderColor: colors.border, paddingHorizontal: 12, paddingVertical: 6, marginRight: 8, backgroundColor: colors.bg },
-  chipOn: { backgroundColor: colors.green, borderColor: colors.green },
+  chipOn: { backgroundColor: colors.primary, borderColor: colors.primary },
   chipText: { color: colors.textSecondary, fontWeight: '600', fontSize: 13 },
-  chipTextOn: { color: '#000000' },
+  chipTextOn: { color: colors.onPrimary },
   row: { flexDirection: 'row', justifyContent: 'space-between', gap: 8 },
   sender: { color: colors.text, fontWeight: '700', fontSize: 15 },
-  amount: { color: colors.greenText, fontWeight: '700' },
+  amount: { color: colors.primaryText, fontWeight: '700' },
   meta: { color: colors.textSecondary, marginTop: 2, fontSize: 13 },
   body: { color: colors.text, marginTop: 6 },
   err: { color: colors.errorText, marginTop: 6, textAlign: 'center' },

@@ -110,14 +110,14 @@ export default function TransactionsList() {
         onEndReachedThreshold={0.4}
         ListEmptyComponent={
           q.isLoading ? (
-            <ActivityIndicator color={colors.greenText} />
+            <ActivityIndicator color={colors.primaryText} />
           ) : (
             <Text style={q.isError ? styles.err : styles.empty}>
               {q.isError ? 'Chargement impossible. Tirez pour réessayer.' : 'Aucune transaction'}
             </Text>
           )
         }
-        ListFooterComponent={q.isFetchingNextPage ? <ActivityIndicator color={colors.greenText} /> : undefined}
+        ListFooterComponent={q.isFetchingNextPage ? <ActivityIndicator color={colors.primaryText} /> : undefined}
         renderItem={({ item: t }) => {
           const st = STATUT_LABEL[t.statut] ?? { label: t.statut, tone: 'neutral' as const };
           return (
@@ -163,12 +163,12 @@ const styles = StyleSheet.create({
   },
   filters: { marginVertical: 10, flexGrow: 0 },
   chip: { borderRadius: 999, borderWidth: 1, borderColor: colors.border, paddingHorizontal: 12, paddingVertical: 6, marginRight: 8, backgroundColor: colors.bg },
-  chipOn: { backgroundColor: colors.green, borderColor: colors.green },
+  chipOn: { backgroundColor: colors.primary, borderColor: colors.primary },
   chipText: { color: colors.textSecondary, fontWeight: '600', fontSize: 13 },
-  chipTextOn: { color: colors.onGreen },
+  chipTextOn: { color: colors.onPrimary },
   row: { flexDirection: 'row', justifyContent: 'space-between', gap: 8 },
   name: { color: colors.text, fontWeight: '700', fontSize: 15, flex: 1 },
-  amount: { color: colors.greenText, fontWeight: '700' },
+  amount: { color: colors.primaryText, fontWeight: '700' },
   meta: { color: colors.textSecondary, marginTop: 2, fontSize: 13 },
   blocked: { opacity: 0.45 },
   pills: { flexDirection: 'row', gap: 6, marginTop: 8, flexWrap: 'wrap' },

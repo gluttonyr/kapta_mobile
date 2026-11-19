@@ -42,16 +42,16 @@ export function PaymentIllustration() {
         <Rect x="95" y="28" width="70" height="138" rx="14" fill={colors.bg} stroke={colors.text} strokeWidth={3} />
         <Rect x="118" y="36" width="24" height="5" rx="2.5" fill={colors.text} />
         <Rect x="105" y="56" width="42" height="14" rx="7" fill={colors.border} />
-        <Rect x="113" y="78" width="42" height="14" rx="7" fill={colors.green} />
+        <Rect x="113" y="78" width="42" height="14" rx="7" fill={colors.primary} />
         <Rect x="105" y="100" width="34" height="14" rx="7" fill={colors.border} />
-        <Circle cx="130" cy="146" r="9" fill={colors.green} />
+        <Circle cx="130" cy="146" r="9" fill={colors.primary} />
       </Svg>
       <Animated.View style={[styles.pill, styles.left, smsFloat]}>
         <MessageSquareText size={16} color={colors.text} />
         <Text style={styles.pillText}>SMS reçu</Text>
       </Animated.View>
       <Animated.View style={[styles.pill, styles.right, styles.paid, paidFloat]}>
-        <BadgeCheck size={16} color={colors.onGreen} />
+        <BadgeCheck size={16} color={colors.onPrimary} />
         <Text style={styles.pillText}>Paiement validé</Text>
       </Animated.View>
     </View>
@@ -74,6 +74,6 @@ const styles = StyleSheet.create({
   },
   left: { left: 0, top: 34 },
   right: { right: 0, bottom: 30 },
-  paid: { backgroundColor: colors.green, borderColor: colors.green },
+  paid: { backgroundColor: colors.primary, borderColor: colors.primary },
   pillText: { fontSize: 13, fontWeight: '700', color: colors.text },
 });

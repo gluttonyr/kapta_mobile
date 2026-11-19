@@ -9,7 +9,7 @@ const PRESSED: ViewStyle = { opacity: 0.6, transform: [{ scale: 0.98 }] };
 export function Pressable({ style, android_ripple, ...props }: Props) {
   return (
     <RNPressable
-      android_ripple={android_ripple ?? { color: 'rgba(0,0,0,0.08)', foreground: true }}
+      android_ripple={android_ripple ?? { color: 'rgba(255,255,255,0.12)', foreground: true }}
       {...props}
       style={(state: PressableStateCallbackType) => [
         (typeof style === 'function' ? style(state) : style) as StyleProp<ViewStyle>,

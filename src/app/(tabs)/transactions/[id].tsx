@@ -55,7 +55,7 @@ export default function TransactionDetail() {
   if (!t) {
     return (
       <SafeAreaView style={styles.root} edges={[]}>
-        {tx.isError ? <Text style={styles.err}>Transaction introuvable</Text> : <ActivityIndicator color={colors.greenText} />}
+        {tx.isError ? <Text style={styles.err}>Transaction introuvable</Text> : <ActivityIndicator color={colors.primaryText} />}
       </SafeAreaView>
     );
   }
@@ -89,10 +89,10 @@ export default function TransactionDetail() {
 
         <Text style={styles.section}>SMS lié</Text>
         {linked.isLoading ? (
-          <ActivityIndicator color={colors.greenText} />
+          <ActivityIndicator color={colors.primaryText} />
         ) : linked.data?.items.length ? (
           linked.data.items.map((s) => (
-            <Card key={s.trackingId} accent={colors.green}>
+            <Card key={s.trackingId} accent={colors.success}>
               <Text style={styles.value}>{s.expediteur} · {fmtMontant(s.montant)}</Text>
               <Text style={styles.label}>{fmtDate(s.receivedAt)}</Text>
               <Text selectable style={styles.body}>{s.corps}</Text>
@@ -110,7 +110,7 @@ export default function TransactionDetail() {
             {searching ? (
               <View style={styles.mt}>
                 <Text style={styles.section}>SMS proposés</Text>
-                {candidates.isLoading ? <ActivityIndicator color={colors.greenText} /> : null}
+                {candidates.isLoading ? <ActivityIndicator color={colors.primaryText} /> : null}
                 {candidates.isError ? <Text style={styles.err}>Chargement impossible</Text> : null}
                 {candidates.data?.length === 0 ? <Text style={styles.label}>Aucun SMS candidat</Text> : null}
                 {candidates.data?.map(smsRow)}
@@ -128,7 +128,7 @@ export default function TransactionDetail() {
                       autoCapitalize="none"
                       autoCorrect={false}
                     />
-                    {freeRes.isLoading ? <ActivityIndicator color={colors.greenText} /> : null}
+                    {freeRes.isLoading ? <ActivityIndicator color={colors.primaryText} /> : null}
                     {freeRes.data?.items.filter((s) => s.statut !== 'ATTRIBUE').map(smsRow)}
                   </>
                 ) : null}
@@ -152,8 +152,8 @@ const styles = StyleSheet.create({
   value: { color: colors.text, fontSize: 15, fontWeight: '600' },
   err: { color: colors.errorText, textAlign: 'center', marginTop: 12 },
   search: { backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1, borderRadius: 12, paddingHorizontal: 12, paddingVertical: 10, color: colors.text, marginVertical: 8 },
-  button: { backgroundColor: colors.green, borderRadius: 12, paddingVertical: 14, alignItems: 'center', marginTop: 6 },
-  buttonText: { color: '#000000', fontWeight: '700', fontSize: 16 },
+  button: { backgroundColor: colors.primary, borderRadius: 12, paddingVertical: 14, alignItems: 'center', marginTop: 6 },
+  buttonText: { color: colors.onPrimary, fontWeight: '700', fontSize: 16 },
   linkBtn: { paddingVertical: 10, alignItems: 'center' },
-  linkText: { color: colors.greenText, fontWeight: '700' },
+  linkText: { color: colors.primaryText, fontWeight: '700' },
 });

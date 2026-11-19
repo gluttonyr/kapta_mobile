@@ -77,7 +77,7 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <LicenseProvider>
         <SessionProvider>
-          <StatusBar style="dark" />
+          <StatusBar style="light" />
           <RootNavigator />
         </SessionProvider>
       </LicenseProvider>

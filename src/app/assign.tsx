@@ -67,7 +67,7 @@ export default function Assign() {
   if (!s || !t) {
     return (
       <SafeAreaView style={styles.root}>
-        {sms.isError || tx.isError ? <Text style={styles.err}>Données introuvables</Text> : <ActivityIndicator color={colors.greenText} />}
+        {sms.isError || tx.isError ? <Text style={styles.err}>Données introuvables</Text> : <ActivityIndicator color={colors.primaryText} />}
       </SafeAreaView>
     );
   }
@@ -114,7 +114,7 @@ export default function Assign() {
             accessibilityState={{ checked: confirmed }}
             style={styles.check}
             onPress={() => setConfirmed((c) => !c)}>
-            {confirmed ? <CheckSquare color={colors.greenText} size={24} /> : <Square color={colors.textSecondary} size={24} />}
+            {confirmed ? <CheckSquare color={colors.successText} size={24} /> : <Square color={colors.textSecondary} size={24} />}
             <Text style={styles.checkText}>Je confirme que ce paiement appartient à ce client</Text>
           </Pressable>
         ) : null}
@@ -134,7 +134,7 @@ export default function Assign() {
             disabled={disabled}
             style={[styles.button, disabled && styles.buttonOff]}
             onPress={submit}>
-            {m.isPending ? <ActivityIndicator color="#000000" /> : <Text style={styles.buttonText}>Confirmer l’attribution</Text>}
+            {m.isPending ? <ActivityIndicator color={colors.onPrimary} /> : <Text style={styles.buttonText}>Confirmer l’attribution</Text>}
           </Pressable>
         )}
       </ScrollView>
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   checkText: { flex: 1, color: colors.text, fontWeight: '600' },
   err: { color: colors.errorText, marginTop: 12 },
   warn: { color: colors.warningText, fontWeight: '700', marginTop: 12 },
-  button: { backgroundColor: colors.green, borderRadius: 12, paddingVertical: 14, alignItems: 'center', marginTop: 16 },
+  button: { backgroundColor: colors.primary, borderRadius: 12, paddingVertical: 14, alignItems: 'center', marginTop: 16 },
   buttonOff: { opacity: 0.4 },
-  buttonText: { color: colors.onGreen, fontWeight: '700', fontSize: 16 },
+  buttonText: { color: colors.onPrimary, fontWeight: '700', fontSize: 16 },
 });

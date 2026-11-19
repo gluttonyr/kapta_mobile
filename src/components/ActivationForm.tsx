@@ -109,7 +109,7 @@ export function ActivationForm({ renew = false, onDone }: { renew?: boolean; onD
               onPress={submit}
               disabled={busy}
               accessibilityRole="button">
-              {busy ? <ActivityIndicator color={colors.onGreen} /> : <Text style={styles.buttonText}>Activer</Text>}
+              {busy ? <ActivityIndicator color={colors.onPrimary} /> : <Text style={styles.buttonText}>Activer</Text>}
             </Pressable>
           </View>
 
@@ -152,8 +152,8 @@ const styles = StyleSheet.create({
   },
   input: { flex: 1, paddingVertical: 14, fontSize: 17, letterSpacing: 1.5, color: colors.text },
   error: { color: colors.errorText, fontSize: 14 },
-  button: { backgroundColor: colors.green, borderRadius: 12, padding: 15, alignItems: 'center' },
-  buttonText: { color: colors.onGreen, fontSize: 16, fontWeight: '700' },
+  button: { backgroundColor: colors.primary, borderRadius: 12, padding: 15, alignItems: 'center' },
+  buttonText: { color: colors.onPrimary, fontSize: 16, fontWeight: '700' },
   secondary: {
     flexDirection: 'row',
     gap: 8,
@@ -165,5 +165,5 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   secondaryText: { color: colors.text, fontSize: 14, fontWeight: '600' },
-  link: { fontSize: 13, color: colors.greenText, fontWeight: '600', textAlign: 'center' },
+  link: { fontSize: 13, color: colors.primaryText, fontWeight: '600', textAlign: 'center' },
 });

@@ -143,7 +143,7 @@ export default function Settings() {
           </Text>
         </Card>
 
-        <Card accent={daysLeft !== null && daysLeft <= EXPIRY_WARNING_DAYS ? colors.warning : colors.green}>
+        <Card accent={daysLeft !== null && daysLeft <= EXPIRY_WARNING_DAYS ? colors.warning : colors.success}>
           <View style={styles.row}>
             <KeyRound size={20} color={colors.text} />
             <Text style={styles.rowLabel}>Licence Kapta</Text>
@@ -166,10 +166,10 @@ export default function Settings() {
         </Card>
 
         {rows.map((r) => (
-          <Card key={r.label} accent={r.ok ? colors.green : colors.error}>
+          <Card key={r.label} accent={r.ok ? colors.success : colors.error}>
             <View style={styles.row}>
               {r.ok ? (
-                <CheckCircle2 size={20} color={colors.greenText} />
+                <CheckCircle2 size={20} color={colors.successText} />
               ) : (
                 <XCircle size={20} color={colors.errorText} />
               )}
@@ -183,9 +183,9 @@ export default function Settings() {
           </Card>
         ))}
 
-        <Card accent={enabled ? colors.green : colors.border}>
+        <Card accent={enabled ? colors.success : colors.border}>
           <View style={styles.row}>
-            <Radio size={20} color={enabled ? colors.greenText : colors.textSecondary} />
+            <Radio size={20} color={enabled ? colors.successText : colors.textSecondary} />
             <View style={styles.switchText}>
               <Text style={styles.rowLabel}>Capturer les SMS sur ce téléphone</Text>
               <Text style={styles.sub}>
@@ -198,7 +198,7 @@ export default function Settings() {
               value={enabled}
               onValueChange={toggleCapture}
               disabled={switching}
-              trackColor={{ true: colors.green, false: colors.border }}
+              trackColor={{ true: colors.success, false: colors.border }}
               thumbColor={colors.bg}
               accessibilityLabel="Capturer les SMS sur ce téléphone"
             />
@@ -262,9 +262,9 @@ const styles = StyleSheet.create({
   resetText: { color: colors.text, fontWeight: '600' },
   since: { gap: 2 },
   sinceDate: { fontSize: 18, fontWeight: '700', color: colors.text },
-  resetNote: { fontSize: 13, color: colors.greenText, textAlign: 'center' },
-  btn: { backgroundColor: colors.green, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 8, minHeight: 44, justifyContent: 'center' },
-  btnText: { color: colors.onGreen, fontWeight: '600' },
+  resetNote: { fontSize: 13, color: colors.successText, textAlign: 'center' },
+  btn: { backgroundColor: colors.primary, borderRadius: 10, paddingHorizontal: 12, paddingVertical: 8, minHeight: 44, justifyContent: 'center' },
+  btnText: { color: colors.onPrimary, fontWeight: '600' },
   logout: { borderColor: colors.errorText, borderWidth: 1, borderRadius: 12, minHeight: 48, alignItems: 'center', justifyContent: 'center', marginVertical: 16 },
   logoutText: { color: colors.errorText, fontWeight: '600', fontSize: 16 },
 });

@@ -72,7 +72,7 @@ export default function Onboarding() {
 const styles = StyleSheet.create({
   title: { fontSize: 16, fontWeight: '700', color: colors.text, marginTop: 8 },
   text: { fontSize: 14, color: colors.textSecondary, marginTop: 2, marginBottom: 10 },
-  btn: { backgroundColor: colors.green, borderRadius: 10, paddingVertical: 12, alignItems: 'center' },
+  btn: { backgroundColor: colors.primary, borderRadius: 10, paddingVertical: 12, alignItems: 'center' },
   btnText: { color: '#000', fontWeight: '700' },
   error: { color: colors.errorText, marginBottom: 8 },
   skip: { paddingVertical: 14, alignItems: 'center' },

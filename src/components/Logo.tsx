@@ -10,33 +10,27 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import Svg, { Circle, Defs, LinearGradient, Path, Rect, Stop } from 'react-native-svg';
+import Svg, { Circle, Defs, LinearGradient, Path, Stop } from 'react-native-svg';
 
 import { colors } from '@/theme/colors';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
-const CHECK = 'M105 124 L116 135 L136 113';
-const CHECK_LENGTH = 46;
 
-function Silver({ id }: { id: string }) {
-  return (
-    <Defs>
-      <LinearGradient id={id} x1="0" y1="0" x2="1" y2="1">
-        <Stop offset="0" stopColor="#F4F5F7" />
-        <Stop offset="0.55" stopColor="#BABEC4" />
-        <Stop offset="1" stopColor="#6B7076" />
-      </LinearGradient>
-    </Defs>
-  );
-}
+// Same geometry as the app icons (240x240 viewBox): an SMS bubble holding a "K", and the dot of a captured payment.
+const BUBBLE =
+  'M70 44 H170 A34 34 0 0 1 204 78 V134 A34 34 0 0 1 170 168 H106 L58 204 L72 168 H70 A34 34 0 0 1 36 134 V78 A34 34 0 0 1 70 44 Z';
+const K_STEM = 'M92 78 V136';
+const K_STEM_LENGTH = 58;
+const K_ARMS = 'M148 78 L104 107 L150 136';
+const K_ARMS_LENGTH = 108;
 
-// The mark is three stacked layers (left leg, right leg, badge) sharing one 240x240 viewBox, so each can move alone.
+// Three layers sharing one viewBox (bubble, K, dot), so each can move alone.
 export function Logo({ size = 96, animate = false, onDone }: { size?: number; animate?: boolean; onDone?: () => void }) {
   const reduced = useReducedMotion();
   const play = animate && !reduced;
-  const legs = useSharedValue(play ? 0 : 1);
-  const badge = useSharedValue(play ? 0 : 1);
-  const check = useSharedValue(play ? 0 : 1);
+  const bubble = useSharedValue(play ? 0 : 1);
+  const letter = useSharedValue(play ? 0 : 1);
+  const dot = useSharedValue(play ? 0 : 1);
 
   useEffect(() => {
     if (!play) {
@@ -44,49 +38,61 @@ export function Logo({ size = 96, animate = false, onDone }: { size?: number; an
       return;
     }
     const ease = Easing.out(Easing.cubic);
-    legs.value = withTiming(1, { duration: 450, easing: ease });
-    badge.value = withDelay(350, withSpring(1, { damping: 11, stiffness: 160 }));
-    check.value = withDelay(650, withTiming(1, { duration: 350, easing: ease }));
+    bubble.value = withSpring(1, { damping: 12, stiffness: 150 });
+    letter.value = withDelay(300, withTiming(1, { duration: 450, easing: ease }));
+    dot.value = withDelay(700, withSpring(1, { damping: 8, stiffness: 220 }));
     const t = setTimeout(() => onDone?.(), 1000);
     return () => clearTimeout(t);
     // Runs once per mount: the splash and login play the intro a single time.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const shift = size * 0.25;
-  const leftStyle = useAnimatedStyle(() => ({ opacity: legs.value, transform: [{ translateX: (legs.value - 1) * shift }] }));
-  const rightStyle = useAnimatedStyle(() => ({ opacity: legs.value, transform: [{ translateX: (1 - legs.value) * shift }] }));
-  const badgeStyle = useAnimatedStyle(() => ({ opacity: Math.min(1, badge.value * 2), transform: [{ scale: badge.value }] }));
-  const checkProps = useAnimatedProps(() => ({ strokeDashoffset: CHECK_LENGTH * (1 - check.value) }));
+  const bubbleStyle = useAnimatedStyle(() => ({
+    opacity: Math.min(1, bubble.value * 2),
+    transform: [{ translateY: (1 - bubble.value) * size * 0.08 }, { scale: 0.85 + bubble.value * 0.15 }],
+  }));
+  const stemProps = useAnimatedProps(() => ({ strokeDashoffset: K_STEM_LENGTH * (1 - Math.min(1, letter.value * 2)) }));
+  const armsProps = useAnimatedProps(() => ({ strokeDashoffset: K_ARMS_LENGTH * (1 - letter.value) }));
+  const dotStyle = useAnimatedStyle(() => ({ opacity: Math.min(1, dot.value * 2), transform: [{ scale: dot.value }] }));
 
   const layer = { width: size, height: size };
   return (
-    <View style={layer} accessible accessibilityRole="image" accessibilityLabel="Logo Mati-Pay">
-      <Animated.View style={[StyleSheet.absoluteFill, leftStyle]}>
+    <View style={layer} accessible accessibilityRole="image" accessibilityLabel="Logo Kapta">
+      <Animated.View style={[StyleSheet.absoluteFill, bubbleStyle]}>
         <Svg width={size} height={size} viewBox="0 0 240 240">
-          <Silver id="mpl" />
-          <Rect x="47" y="50" width="30" height="150" rx="15" fill="url(#mpl)" transform="rotate(18 62 125)" />
-        </Svg>
-      </Animated.View>
-      <Animated.View style={[StyleSheet.absoluteFill, rightStyle]}>
-        <Svg width={size} height={size} viewBox="0 0 240 240">
-          <Silver id="mpr" />
-          <Rect x="163" y="50" width="30" height="150" rx="15" fill="url(#mpr)" transform="rotate(-18 178 125)" />
-        </Svg>
-      </Animated.View>
-      <Animated.View style={[StyleSheet.absoluteFill, badgeStyle]}>
-        <Svg width={size} height={size} viewBox="0 0 240 240">
-          <Circle cx="120" cy="124" r="31" fill={colors.green} />
+          <Defs>
+            <LinearGradient id="kaptaAmber" x1="0" y1="0" x2="1" y2="1">
+              <Stop offset="0" stopColor="#FCD34D" />
+              <Stop offset="0.5" stopColor={colors.primary} />
+              <Stop offset="1" stopColor="#D97706" />
+            </LinearGradient>
+          </Defs>
+          <Path d={BUBBLE} fill="url(#kaptaAmber)" />
           <AnimatedPath
-            d={CHECK}
+            d={K_STEM}
             fill="none"
-            stroke={colors.text}
-            strokeWidth={8}
+            stroke={colors.onPrimary}
+            strokeWidth={16}
+            strokeLinecap="round"
+            strokeDasharray={K_STEM_LENGTH}
+            animatedProps={stemProps}
+          />
+          <AnimatedPath
+            d={K_ARMS}
+            fill="none"
+            stroke={colors.onPrimary}
+            strokeWidth={16}
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeDasharray={CHECK_LENGTH}
-            animatedProps={checkProps}
+            strokeDasharray={K_ARMS_LENGTH}
+            animatedProps={armsProps}
           />
+        </Svg>
+      </Animated.View>
+      <Animated.View style={[StyleSheet.absoluteFill, dotStyle]}>
+        <Svg width={size} height={size} viewBox="0 0 240 240">
+          <Circle cx="190" cy="50" r="19" fill={colors.bg} />
+          <Circle cx="190" cy="50" r="13" fill={colors.success} />
         </Svg>
       </Animated.View>
     </View>

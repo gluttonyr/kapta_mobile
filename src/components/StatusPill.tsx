@@ -4,9 +4,9 @@ import { Text } from '@/components/Text';
 import { colors } from '@/theme/colors';
 
 const tones = {
-  success: { bg: colors.green, fg: '#000000' },
-  warning: { bg: '#FFE3B3', fg: colors.warningText },
-  error: { bg: '#FFD6D6', fg: colors.errorText },
+  success: { bg: colors.success, fg: colors.onPrimary },
+  warning: { bg: colors.warningSurface, fg: colors.warningText },
+  error: { bg: colors.errorSurface, fg: colors.errorText },
   neutral: { bg: colors.border, fg: colors.textSecondary },
 } as const;
 

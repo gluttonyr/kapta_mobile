@@ -19,10 +19,10 @@ const STATUT: Record<Sms['statut'], { label: string; tone: 'success' | 'warning'
 };
 
 function origine(s: Sms) {
-  if (s.origineAttribution === 'AUTO_MATI_PAY') return 'Validé automatiquement par Mati-Pay';
-  if (s.origineAttribution === 'MATISTORE') return 'Déjà validé par MatiStore';
+  if (!s.origineAttribution) return null;
+  if (s.origineAttribution === 'AUTO_MATI_PAY') return 'Validé automatiquement par Kapta';
   if (s.origineAttribution === 'MANUEL') return `Attribué par ${s.attribuePar ?? 'un administrateur'}`;
-  return null;
+  return 'Déjà validé par l’application du client';
 }
 
 const fmtDate = (d: string) => new Date(d).toLocaleString('fr-FR');
@@ -45,7 +45,7 @@ export default function SmsDetail() {
   if (!s) {
     return (
       <SafeAreaView style={styles.root} edges={[]}>
-        {q.isError ? <Text style={styles.err}>SMS introuvable</Text> : <ActivityIndicator color={colors.greenText} />}
+        {q.isError ? <Text style={styles.err}>SMS introuvable</Text> : <ActivityIndicator color={colors.primaryText} />}
       </SafeAreaView>
     );
   }
@@ -71,7 +71,7 @@ export default function SmsDetail() {
         </Card>
 
         {s.transaction ? (
-          <Card accent={colors.green}>
+          <Card accent={colors.success}>
             <Text style={styles.label}>Transaction liée</Text>
             {o ? <Text style={styles.origin}>{o}</Text> : null}
             <Field label="Client" value={s.transaction.client} />
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
   field: { marginBottom: 8 },
   label: { color: colors.textSecondary, fontSize: 13 },
   value: { color: colors.text, fontSize: 15, fontWeight: '600' },
-  origin: { color: colors.greenText, fontWeight: '700', marginVertical: 6 },
+  origin: { color: colors.primaryText, fontWeight: '700', marginVertical: 6 },
   err: { color: colors.errorText, textAlign: 'center', marginTop: 24 },
-  button: { backgroundColor: colors.green, borderRadius: 12, paddingVertical: 14, alignItems: 'center', marginTop: 6 },
-  buttonText: { color: '#000000', fontWeight: '700', fontSize: 16 },
+  button: { backgroundColor: colors.primary, borderRadius: 12, paddingVertical: 14, alignItems: 'center', marginTop: 6 },
+  buttonText: { color: colors.onPrimary, fontWeight: '700', fontSize: 16 },
 });

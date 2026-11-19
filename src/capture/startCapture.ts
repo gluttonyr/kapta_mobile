@@ -22,7 +22,7 @@ export const getStartError = () => lastStartError;
 
 function describe(e: any): string {
   const code = e?.response?.status;
-  if (code === 404) return 'Le serveur n’a pas encore le module Mati-Pay (404)';
+  if (code === 404) return 'Le serveur du client n’a pas le module de capture (404)';
   if (code === 401 || code === 403) return 'Reconnexion requise';
   if (code) return `Le serveur a refusé le démarrage (${code})`;
   if (e?.request) return 'Serveur injoignable : vérifiez la connexion';
@@ -30,12 +30,12 @@ function describe(e: any): string {
 }
 
 // Per-phone switch (Réglages): a consultation-only phone must neither read SMS nor send "ready" heartbeats.
-const CAPTURE_ENABLED_KEY = 'mati-pay-capture-enabled';
+const CAPTURE_ENABLED_KEY = 'kapta-capture-enabled';
 export const isCaptureEnabled = async () => (await store.get(CAPTURE_ENABLED_KEY)) !== '0';
 export const setCaptureEnabled = (on: boolean) => store.set(CAPTURE_ENABLED_KEY, on ? '1' : '0');
 
 // SMS received before this date are never validated automatically (backend rule); shown in Réglages.
-const ACTIVATED_AT_KEY = 'mati-pay-activated-at';
+const ACTIVATED_AT_KEY = 'kapta-activated-at';
 export type Activation = { at: string; reset: boolean };
 // `reset`: the date comes from "Réinitialiser" rather than this phone's first activation.
 export async function getActivatedAt(): Promise<Activation | null> {

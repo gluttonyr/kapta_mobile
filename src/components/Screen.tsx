@@ -18,7 +18,7 @@ export function Screen({ title, children }: { title?: string; children?: ReactNo
           </View>
           <View>
             <Text style={styles.brand}>
-              MATI <Text style={styles.pay}>PAY</Text>
+              KAP<Text style={styles.pay}>TA</Text>
             </Text>
             <Text style={styles.title}>{title}</Text>
           </View>
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   brand: { fontSize: 11, fontWeight: '800', letterSpacing: 2, color: colors.textSecondary },
-  pay: { color: colors.greenText, fontWeight: '800' },
+  pay: { color: colors.primaryText, fontWeight: '800' },
   title: { fontSize: 22, fontWeight: '700', color: colors.text },
   body: { flex: 1, paddingHorizontal: 16 },
 });

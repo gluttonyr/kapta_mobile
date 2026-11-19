@@ -37,5 +37,5 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
-  link: { fontSize: 13, color: colors.greenText, fontWeight: '600', textAlign: 'center', marginTop: 4 },
+  link: { fontSize: 13, color: colors.primaryText, fontWeight: '600', textAlign: 'center', marginTop: 4 },
 });

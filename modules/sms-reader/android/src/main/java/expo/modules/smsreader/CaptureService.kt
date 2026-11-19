@@ -23,7 +23,7 @@ import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
 
-/** Foreground service: "Mati-Pay actif" notification, heartbeat and upload kick every 60 s. */
+/** Foreground service: "Kapta actif" notification, heartbeat and upload kick every 60 s. */
 class CaptureService : Service() {
   companion object {
     private const val CHANNEL_ID = "capture"
@@ -136,7 +136,7 @@ class CaptureService : Service() {
       PendingIntent.getActivity(this, 0, it, PendingIntent.FLAG_IMMUTABLE)
     }
     return builder
-      .setContentTitle("Mati-Pay actif")
+      .setContentTitle("Kapta actif")
       .setContentText("Capture des SMS de paiement")
       .setSmallIcon(applicationInfo.icon)
       .setOngoing(true)

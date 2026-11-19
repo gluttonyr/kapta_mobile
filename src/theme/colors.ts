@@ -1,15 +1,19 @@
+// Kapta: midnight blue background, amber brand, turquoise for "all good".
 export const colors = {
-  bg: '#FFFFFF',
-  card: '#F5F6F7',
-  border: '#E4E6E8',
-  text: '#0A0A0A',
-  textSecondary: '#5F6368',
-  green: '#7DFF2A', // surface only, with black text
-  greenText: '#267A0C',
-  error: '#FF4444',
-  errorText: '#B3261E',
-  warning: '#FFA500',
-  warningSurface: '#FFE3B3',
-  onGreen: '#000000', // text on green surfaces
-  warningText: '#8F5200',
+  bg: '#0F172A',
+  card: '#1E293B',
+  border: '#334155',
+  text: '#F8FAFC',
+  textSecondary: '#94A3B8',
+  primary: '#F59E0B', // brand surfaces (buttons, chips), with onPrimary text
+  primaryText: '#FBBF24', // brand colour for text and icons on bg/card
+  onPrimary: '#0F172A',
+  success: '#14B8A6', // running capture, granted permission, matched payment
+  successText: '#2DD4BF',
+  error: '#F43F5E',
+  errorText: '#FB7185',
+  errorSurface: '#3F1322',
+  warning: '#FB923C',
+  warningSurface: '#3B2312',
+  warningText: '#FDBA74',
 } as const;

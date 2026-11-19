@@ -19,7 +19,7 @@ import { EXPIRY_WARNING_DAYS, useLicense } from '@/license/LicenseProvider';
 import { colors } from '@/theme/colors';
 import type { CaptureStatus } from '../../../modules/sms-reader';
 
-const ONBOARDED_KEY = 'mati-pay-onboarded';
+const ONBOARDED_KEY = 'kapta-onboarded';
 
 // Reason in priority order: auth, SMS permission, service (with the server's answer), battery.
 // `permission` says whether the onboarding link can actually fix it.
@@ -93,7 +93,7 @@ export default function Home() {
             <Text style={styles.row}>Consultation seule. La capture se réactive dans Réglages.</Text>
           </Card>
         ) : status ? (
-          <Card accent={reason ? colors.error : colors.green}>
+          <Card accent={reason ? colors.error : colors.success}>
             {reason ? (
               <>
                 <StatusPill label="Capture arrêtée" tone="error" />
@@ -142,7 +142,7 @@ export default function Home() {
                 setBusy(false);
               }
             }}>
-            {busy ? <ActivityIndicator color={colors.onGreen} /> : <RefreshCw size={18} color={colors.onGreen} />}
+            {busy ? <ActivityIndicator color={colors.onPrimary} /> : <RefreshCw size={18} color={colors.onPrimary} />}
             <Text style={styles.btnText}>{busy ? 'Relecture en cours…' : 'Relire les SMS maintenant'}</Text>
           </Pressable>
         ) : null}
@@ -171,7 +171,7 @@ function Pulse() {
 function Counter({ Icon, label, value, onPress }: { Icon: typeof Wallet; label: string; value?: number; onPress: () => void }) {
   return (
     <Pressable style={styles.counter} accessibilityRole="button" onPress={onPress}>
-      <Icon size={18} color={colors.greenText} />
+      <Icon size={18} color={colors.primaryText} />
       <Text style={styles.count}>{value ?? '–'}</Text>
       <Text style={styles.countLabel}>{label}</Text>
     </Pressable>
@@ -181,17 +181,17 @@ function Counter({ Icon, label, value, onPress }: { Icon: typeof Wallet; label: 
 const styles = StyleSheet.create({
   text: { color: colors.textSecondary },
   reason: { color: colors.errorText, fontWeight: '600', marginTop: 6 },
-  link: { color: colors.greenText, fontWeight: '600', marginTop: 6 },
+  link: { color: colors.primaryText, fontWeight: '600', marginTop: 6 },
   row: { color: colors.text, marginTop: 6 },
   counters: { flexDirection: 'row', gap: 8, marginBottom: 12 },
   counter: { flex: 1, backgroundColor: colors.card, borderColor: colors.border, borderWidth: 1, borderRadius: 14, padding: 12 },
   count: { fontSize: 24, fontWeight: '700', color: colors.text },
   countLabel: { fontSize: 12, color: colors.textSecondary, marginTop: 2 },
-  btn: { backgroundColor: colors.green, borderRadius: 12, paddingVertical: 14, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 8 },
-  btnText: { color: colors.onGreen, fontWeight: '700' },
+  btn: { backgroundColor: colors.primary, borderRadius: 12, paddingVertical: 14, alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 8 },
+  btnText: { color: colors.onPrimary, fontWeight: '700' },
   live: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   note: { color: colors.textSecondary, textAlign: 'center', marginTop: 10, fontSize: 13 },
   pulse: { width: 14, height: 14, alignItems: 'center', justifyContent: 'center' },
-  pulseRing: { position: 'absolute', width: 14, height: 14, borderRadius: 7, backgroundColor: colors.green },
-  pulseDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: colors.greenText },
+  pulseRing: { position: 'absolute', width: 14, height: 14, borderRadius: 7, backgroundColor: colors.success },
+  pulseDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: colors.successText },
 });

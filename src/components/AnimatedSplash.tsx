@@ -25,7 +25,7 @@ export function AnimatedSplash({ ready, onFinish }: { ready: boolean; onFinish: 
       <Logo size={160} animate onDone={() => setIntroDone(true)} />
       <Animated.View entering={FadeInDown.delay(800).duration(400)}>
         <Text style={styles.name}>
-          MATI <Text style={styles.pay}>PAY</Text>
+          KAP<Text style={styles.pay}>TA</Text>
         </Text>
       </Animated.View>
     </Animated.View>
@@ -35,5 +35,5 @@ export function AnimatedSplash({ ready, onFinish }: { ready: boolean; onFinish: 
 const styles = StyleSheet.create({
   root: { backgroundColor: colors.bg, alignItems: 'center', justifyContent: 'center', gap: 20, zIndex: 10 },
   name: { fontSize: 30, fontWeight: '800', letterSpacing: 5, color: colors.text },
-  pay: { color: colors.greenText, fontWeight: '800' },
+  pay: { color: colors.primaryText, fontWeight: '800' },
 });

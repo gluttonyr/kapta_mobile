@@ -22,7 +22,7 @@ export function BackgroundDecor() {
       <View style={[styles.blob, styles.blobBottom]} />
       {SPOTS.map(({ Icon, size, rotate, green, ...pos }, i) => (
         <View key={i} style={[styles.spot, pos, { transform: [{ rotate }], opacity: green ? 0.22 : 0.08 }]}>
-          <Icon size={size} color={green ? colors.greenText : colors.text} strokeWidth={1.6} />
+          <Icon size={size} color={green ? colors.primaryText : colors.text} strokeWidth={1.6} />
         </View>
       ))}
     </View>
@@ -31,7 +31,7 @@ export function BackgroundDecor() {
 
 const styles = StyleSheet.create({
   spot: { position: 'absolute' },
-  blob: { position: 'absolute', backgroundColor: colors.green, opacity: 0.12, borderRadius: 999 },
+  blob: { position: 'absolute', backgroundColor: colors.primary, opacity: 0.12, borderRadius: 999 },
   blobTop: { width: 220, height: 220, top: -90, right: -80 },
   blobBottom: { width: 260, height: 260, bottom: -120, left: -110 },
 });

@@ -13,18 +13,18 @@ const withCmake = (cfg) =>
 
 export default ({ config }) => withCmake({
   ...config,
-  name: "Mati-Pay",
-  slug: "mati_pay",
+  name: "Kapta",
+  slug: "kapta",
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/images/icon.png",
-  scheme: "matipay",
-  userInterfaceStyle: "light",
-  ios: { icon: "./assets/expo.icon" },
+  scheme: "kapta",
+  userInterfaceStyle: "dark",
   android: {
-    package: "com.urbain_diligence.mati_pay",
+    // Not Mati-Pay's package: Kapta installs next to it instead of replacing it.
+    package: "com.urbain_diligence.kapta",
     adaptiveIcon: {
-      backgroundColor: "#FFFFFF",
+      backgroundColor: "#0F172A",
       foregroundImage: "./assets/images/android-icon-foreground.png",
       backgroundImage: "./assets/images/android-icon-background.png",
       monochromeImage: "./assets/images/android-icon-monochrome.png",
@@ -38,7 +38,7 @@ export default ({ config }) => withCmake({
     [
       "expo-splash-screen",
       {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#0F172A",
         image: "./assets/images/splash-icon.png",
         imageWidth: 200,
       },
@@ -51,6 +51,6 @@ export default ({ config }) => withCmake({
     // Kapta license server. The client's backend URL is not here: it comes with the license.
     // Set KAPTA_API_URL for the build; the default reaches a local server from the Android emulator.
     kaptaApiUrl: process.env.KAPTA_API_URL || "http://10.0.2.2:3001",
-    eas: { projectId: "ef04824d-e7be-4c55-b093-2ae308782565" },
+    // No EAS project yet (Mati-Pay's belongs to Matistore): `npx eas-cli init` adds Kapta's own id here.
   },
 });

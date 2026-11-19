@@ -12,7 +12,9 @@ export type Sms = {
   telephone: string | null;
   reference: string | null;
   statut: SmsStatut;
-  origineAttribution: 'AUTO_MATI_PAY' | 'MATISTORE' | 'MANUEL' | null;
+  // 'AUTO_MATI_PAY' (capture app, name kept by the client backends), 'MANUEL', or the client's own app
+  // under its name ('MATISTORE', 'JM_SERVICES'…).
+  origineAttribution: string | null;
   motif: string | null;
   createdAt: string;
   updatedAt: string;

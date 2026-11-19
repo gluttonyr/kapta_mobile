@@ -47,7 +47,7 @@ export function CredentialsForm({ title, hint, onSubmit, footer }: Props) {
           <View style={styles.brand}>
             <Logo size={96} animate />
             <Text style={styles.name}>
-              MATI <Text style={styles.pay}>PAY</Text>
+              KAP<Text style={styles.pay}>TA</Text>
             </Text>
             <Text style={styles.tagline}>Validation des paiements Mobile Money</Text>
           </View>
@@ -93,11 +93,11 @@ export function CredentialsForm({ title, hint, onSubmit, footer }: Props) {
               disabled={busy}
               accessibilityRole="button">
               {busy ? (
-                <ActivityIndicator color={colors.onGreen} />
+                <ActivityIndicator color={colors.onPrimary} />
               ) : (
                 <>
                   <Text style={styles.buttonText}>Se connecter</Text>
-                  <ArrowRight size={18} color={colors.onGreen} />
+                  <ArrowRight size={18} color={colors.onPrimary} />
                 </>
               )}
             </Pressable>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   content: { flexGrow: 1, justifyContent: 'center', padding: 24, gap: 20 },
   brand: { alignItems: 'center', gap: 6 },
   name: { fontSize: 28, fontWeight: '800', letterSpacing: 5, color: colors.text, marginTop: 4 },
-  pay: { color: colors.greenText, fontWeight: '800' },
+  pay: { color: colors.primaryText, fontWeight: '800' },
   tagline: { fontSize: 14, color: colors.textSecondary },
   form: {
     gap: 12,
@@ -142,11 +142,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     justifyContent: 'center',
-    backgroundColor: colors.green,
+    backgroundColor: colors.primary,
     borderRadius: 12,
     padding: 15,
     alignItems: 'center',
   },
-  buttonText: { color: colors.onGreen, fontSize: 16, fontWeight: '700' },
+  buttonText: { color: colors.onPrimary, fontSize: 16, fontWeight: '700' },
   hint: { fontSize: 12, color: colors.textSecondary, textAlign: 'center' },
 });
